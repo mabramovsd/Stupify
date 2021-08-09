@@ -18,26 +18,57 @@ namespace Stupify.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("Stupify.Model.Artist", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer")
+                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                b.Property<string>("Description")
+                    .HasColumnType("text");
+
+                b.Property<string>("Name")
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.ToTable("Artists");
+            });
+
             modelBuilder.Entity("Stupify.Model.Song", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer")
+                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
+                b.Property<string>("Address")
+                    .HasColumnType("text");
 
-                    b.Property<string>("Artist")
-                        .HasColumnType("text");
+                b.Property<int>("ArtistId")
+                    .HasColumnType("integer");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Songs");
-                });
+                b.HasIndex("ArtistId");
+
+                b.ToTable("Songs");
+            });
+
+            modelBuilder.Entity("Stupify.Model.Song", b =>
+            {
+                b.HasOne("Stupify.Model.Artist", "Artist")
+                    .WithMany()
+                    .HasForeignKey("ArtistId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Artist");
+            });
 #pragma warning restore 612, 618
         }
     }

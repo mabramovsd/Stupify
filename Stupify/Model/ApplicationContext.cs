@@ -12,6 +12,7 @@ namespace Stupify.Model
     public class ApplicationContext : DbContext
     {
         public DbSet<Song> Songs { get; set; }
+        public DbSet<Artist> Artists { get; set; }
 
 
         public ApplicationContext()
