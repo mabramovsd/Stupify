@@ -9,11 +9,6 @@ namespace Stupify.Controllers
     [Route("[controller]")]
     public class SongsController : ControllerBase
     {
-        /// Invoke-RestMethod http://localhost:7564/songs/ -Method GET
-        /// Invoke-RestMethod http://localhost:7564/songs -Method POST -Body (@{Name = "My Plague"; Artist="Slipknot"; Address = "http://slipknotation.narod.ru/mp3/iowa/Slipknot_-_My_plague.mp3"} | ConvertTo-Json) -ContentType "application/json; charset=utf-8"
-        /// Invoke-RestMethod http://localhost:7564/songs/5 -Method DELETE
-
-        public static List<Song> Songs;
         private readonly SongService songService;
 
         public SongsController(SongService songService)
@@ -21,18 +16,29 @@ namespace Stupify.Controllers
             this.songService = songService;
         }
 
+        /// <summary>
+        /// Список песен
+        /// </summary>
         [HttpGet]
         public ActionResult<List<Song>> Get()
         {
             return songService.GetList();
         }
 
+        /// <summary>
+        /// Выбранная песня
+        /// </summary>
+        /// <param name="id">Идентификатор песни</param>
         [HttpGet("{id}")]
         public ActionResult<Song> Get(int id)
         {
             return songService.Get(id);
         }
 
+        /// <summary>
+        /// Создание песни
+        /// </summary>
+        /// <param name="song">Параметры песни</param>
         [HttpPost]
         public ActionResult<Song> Post(Song song)
         {
@@ -41,6 +47,10 @@ namespace Stupify.Controllers
             return Ok(song);
         }
 
+        /// <summary>
+        /// Обновление песни
+        /// </summary>
+        /// <param name="song">Параметры песни</param>
         [HttpPut]
         public ActionResult Put(Song song)
         {
@@ -48,6 +58,10 @@ namespace Stupify.Controllers
             return Ok(song);
         }
 
+        /// <summary>
+        /// Удаление песни
+        /// </summary>
+        /// <param name="id">Идентификатор песни</param>
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
