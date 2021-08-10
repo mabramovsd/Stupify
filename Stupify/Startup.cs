@@ -26,6 +26,7 @@ namespace Stupify
             services.AddControllersWithViews();
             string connectionString = "Host=localhost;Port=5432;Database=music;Username=postgres;Password=postgres";
             services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
+            services.AddTransient<ArtistService>();
             services.AddTransient<SongService>();
 
             services.AddSwaggerGen(c =>

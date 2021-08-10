@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stupify.Model;
+using Stupify.Model.Artists;
+using Stupify.Model.Songs;
 using Stupify.Services;
 using System.Collections.Generic;
 
@@ -20,9 +22,28 @@ namespace Stupify.Controllers
         /// Список песен
         /// </summary>
         [HttpGet]
-        public ActionResult<List<Song>> Get()
+        public ActionResult<List<SongToRead>> Get()
         {
-            return songService.GetList();
+            List<SongToRead> songs = new List<SongToRead>();
+            foreach (var songFromDB in songService.GetList())
+            {
+                SongToRead song = new SongToRead
+                {
+                    Id = songFromDB.Id,
+                    Address = songFromDB.Address,
+                    ArtistId = songFromDB.ArtistId,
+                    Artist = new ArtistToSave
+                    {
+                        Id = songFromDB.Artist.Id,
+                        Description = songFromDB.Artist.Description,
+                        Name = songFromDB.Artist.Name
+                    },
+                    Name = songFromDB.Name
+                };
+
+                songs.Add(song);
+            }
+            return songs;
         }
 
         /// <summary>
@@ -30,9 +51,23 @@ namespace Stupify.Controllers
         /// </summary>
         /// <param name="id">Идентификатор песни</param>
         [HttpGet("{id}")]
-        public ActionResult<Song> Get(int id)
+        public ActionResult<SongToRead> Get(int id)
         {
-            return songService.Get(id);
+            var songFromDB = songService.Get(id);
+            SongToRead song = new SongToRead
+            {
+                Id = songFromDB.Id,
+                Address = songFromDB.Address,
+                ArtistId = songFromDB.ArtistId,
+                Artist = new ArtistToSave
+                {
+                    Id = songFromDB.Artist.Id,
+                    Description = songFromDB.Artist.Description,
+                    Name = songFromDB.Artist.Name
+                },
+                Name = songFromDB.Name
+            };
+            return song;
         }
 
         /// <summary>
@@ -40,10 +75,16 @@ namespace Stupify.Controllers
         /// </summary>
         /// <param name="song">Параметры песни</param>
         [HttpPost]
-        public ActionResult<Song> Post(Song song)
+        public ActionResult<SongToSave> Post(SongToSave song)
         {
-            song.Id = 0;
-            songService.Create(song);
+            Song songFromDB = new Song
+            {
+                Id = 0,
+                Address = song.Address,
+                ArtistId = song.ArtistId,
+                Name = song.Name
+            };
+            songService.Create(songFromDB);
             return Ok(song);
         }
 
@@ -52,9 +93,17 @@ namespace Stupify.Controllers
         /// </summary>
         /// <param name="song">Параметры песни</param>
         [HttpPut]
-        public ActionResult Put(Song song)
+        public ActionResult Put(SongToSave song)
         {
-            songService.Update(song);
+            Song songFromDB = new Song
+            {
+                Id = song.Id,
+                Address = song.Address,
+                ArtistId = song.ArtistId,
+                Name = song.Name
+            };
+
+            songService.Update(songFromDB);
             return Ok(song);
         }
 
