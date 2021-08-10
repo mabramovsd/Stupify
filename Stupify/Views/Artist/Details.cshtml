@@ -1,13 +1,15 @@
 ﻿@using Stupify.Model;
 
-<h1>Все песни</h1>
+<h1>@ViewBag.Artist.Name</h1>
+<div>@ViewBag.Artist.Description</div>
 
+<br/>
 <table>
     @foreach (Song song in ViewBag.Songs)
     {
         <tr>
             <td>
-                <a href="Artist/@song.ArtistId">@song.Artist.Name</a>
+                <a href="Artist/Details/@song.ArtistId">@song.Artist.Name</a>
             </td>
             <td>@song.Name</td>
             <td>

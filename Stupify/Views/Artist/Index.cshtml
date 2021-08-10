@@ -1,0 +1,10 @@
+﻿@using Stupify.Model;
+
+<h1>Исполнители</h1>
+
+@foreach (Artist artist in ViewBag.Artists)
+{
+    <div>
+        <a href="Artist/@artist.Id">@artist.Name</a>
+    </div>
+}
