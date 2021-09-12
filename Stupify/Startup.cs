@@ -34,7 +34,7 @@ namespace Stupify
 
             string connectionString = "Host=localhost;Port=5432;Database=music;Username=postgres;Password=postgres";
             services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
-            services.AddTransient<ArtistService>();
+            services.AddTransient<IRepository<Artist>, ArtistService>();
             services.AddTransient<SongService>();
             services.AddTransient<UserService>();
             services.AddTransient<UserLikeService>();

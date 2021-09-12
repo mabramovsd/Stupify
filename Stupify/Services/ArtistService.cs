@@ -6,7 +6,7 @@ using Stupify.Model;
 
 namespace Stupify.Services
 {
-    public class ArtistService
+    public class ArtistService : IRepository<Artist>
     {
         /// <summary>
         /// Снимок базы

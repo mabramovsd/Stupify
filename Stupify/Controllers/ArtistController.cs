@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Stupify.Model;
 using Stupify.Services;
 
 namespace Stupify.Controllers
@@ -7,9 +8,9 @@ namespace Stupify.Controllers
     [Route("[controller]")]
     public class ArtistController : Controller
     {
-        private readonly ArtistService artistService;
+        private readonly IRepository<Artist> artistService;
 
-        public ArtistController(ArtistService artistService)
+        public ArtistController(IRepository<Artist> artistService)
         {
             this.artistService = artistService;
         }
