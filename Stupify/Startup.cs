@@ -37,6 +37,7 @@ namespace Stupify
             services.AddTransient<ArtistService>();
             services.AddTransient<SongService>();
             services.AddTransient<UserService>();
+            services.AddTransient<UserLikeService>();
 
             services.AddSwaggerGen(c =>
             {

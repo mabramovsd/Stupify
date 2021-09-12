@@ -6,35 +6,35 @@ using Stupify.Model;
 
 namespace Stupify.Services
 {
-    public class UserService
+    public class UserLikeService
     {
         private readonly ApplicationContext context;
 
-        public UserService(ApplicationContext context)
+        public UserLikeService(ApplicationContext context)
         {
             this.context = context;
         }
 
-        public List<User> GetList()
+        public List<UserLike> GetList()
         {
-            return context.Users.Include(u => u.Likes).ToList();
+            return context.UserLikes.Include(u => u.Song).ToList();
         }
 
-        public User Get(int id)
+        public UserLike Get(int id)
         {
-            return context.Users
+            return context.UserLikes
                 .Where(u => u.Id == id)
-                .Include(u => u.Likes)
+                .Include(u => u.Song)
                 .FirstOrDefault();
         }
 
-        public void Create(User newUser)
+        public void Create(UserLike newUserLike)
         {
             using var transaction = context.Database.BeginTransaction();
 
             try
             {
-                context.Users.Add(newUser);
+                context.UserLikes.Add(newUserLike);
                 context.SaveChanges();
                 transaction.Commit();
             }
@@ -44,12 +44,12 @@ namespace Stupify.Services
             }
         }
 
-        public void Update(User updatedUser)
+        public void Update(UserLike updatedUserLike)
         {
             using var transaction = context.Database.BeginTransaction();
             try
             {
-                context.Entry(updatedUser).State = EntityState.Modified;
+                context.Entry(updatedUserLike).State = EntityState.Modified;
                 context.SaveChanges();
                 transaction.Commit();
             }
@@ -61,14 +61,14 @@ namespace Stupify.Services
 
         public void Delete(int id)
         {
-            var userToDelete = context.Users
+            var userLikeToDelete = context.UserLikes
                 .Where(x => x.Id == id)
                 .FirstOrDefault();
 
             using var transaction = context.Database.BeginTransaction();
             try
             {
-                context.Users.Remove(userToDelete);
+                context.UserLikes.Remove(userLikeToDelete);
                 context.SaveChanges();
                 transaction.Commit();
             }
