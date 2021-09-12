@@ -1,0 +1,30 @@
+﻿@model Stupify.ViewModel.LoginModel
+
+<head>
+    <meta charset="utf-8" />
+    <title>Авторизация</title>
+</head>
+
+<form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <fieldset style="width: 100pt" align="center">
+        <legend>Авторизация</legend>
+        <div class="form-group">
+            <label asp-for="Login">Введите логин</label><br />
+            <input type="text" asp-for="Login" />
+            <span asp-validation-for="Login" /><br />
+        </div><br />
+        <div class="form-group">
+            <label asp-for="Password">Введите пароль</label><br />
+            <input asp-for="Password" />
+            <span asp-validation-for="Password" /><br />
+        </div> <br />
+        <div class="form-group">
+            <input type="submit" value="Войти" class="btn btn-outline-dark" />
+        </div>
+    </fieldset>
+</form>
+
+<form action="/Account/Register">
+    <input type="submit" value="Регистрация"/>
+</form>

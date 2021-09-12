@@ -1,0 +1,26 @@
+﻿@model Stupify.ViewModel.RegisterModel
+
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+    <fieldset style="width: 100pt" align="center">
+        <legend>Регистрация</legend>
+        <div class="form-group">
+            <label asp-for="Login"></label><br />
+            <input asp-for="Login" />
+            <span asp-validation-for="Login"></span>
+        </div><br />
+        <div class="form-group">
+            <label asp-for="Password"></label><br />
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div><br />
+        <div class="form-group">
+            <label asp-for="PasswordConfirm"></label><br />
+            <input asp-for="PasswordConfirm" />
+            <span asp-validation-for="PasswordConfirm"></span>
+        </div><br />
+        <div>
+            <input type="submit" value="Регистрация"  class="btn btn-outline-dark" />
+        </div>
+    </fieldset>
+</form>

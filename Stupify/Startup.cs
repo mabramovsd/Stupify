@@ -28,6 +28,7 @@ namespace Stupify
             services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
             services.AddTransient<ArtistService>();
             services.AddTransient<SongService>();
+            services.AddTransient<UserService>();
 
             services.AddSwaggerGen(c =>
             {
