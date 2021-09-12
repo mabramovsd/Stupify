@@ -9,10 +9,10 @@ namespace Stupify.Controllers
     [Route("[controller]")]
     public class UserLikeController : Controller
     {
-        private readonly UserLikeService likeService;
-        private readonly UserService userService;
+        private readonly IRepository<UserLike> likeService;
+        private readonly IRepository<User> userService;
 
-        public UserLikeController(UserLikeService likeService, UserService userService)
+        public UserLikeController(IRepository<UserLike> likeService, IRepository<User> userService)
         {
             this.likeService = likeService;
             this.userService = userService;

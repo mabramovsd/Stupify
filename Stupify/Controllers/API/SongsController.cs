@@ -11,9 +11,9 @@ namespace Stupify.Controllers
     [Route("[controller]")]
     public class SongsController : ControllerBase
     {
-        private readonly SongService songService;
+        private readonly IRepository<Song> songService;
 
-        public SongsController(SongService songService)
+        public SongsController(IRepository<Song> songService)
         {
             this.songService = songService;
         }

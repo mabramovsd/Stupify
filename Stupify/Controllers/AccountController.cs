@@ -18,9 +18,9 @@ namespace Stupify.Controllers
     [Route("[controller]")]
     public class AccountController : Controller
     {
-        private readonly UserService userService;
+        private readonly IRepository<User> userService;
 
-        public AccountController(UserService userService)
+        public AccountController(IRepository<User> userService)
         {
             this.userService = userService;
         }

@@ -6,7 +6,7 @@ using Stupify.Model;
 
 namespace Stupify.Services
 {
-    public class UserLikeService
+    public class UserLikeService : IRepository<UserLike>
     {
         private readonly ApplicationContext context;
 

@@ -16,12 +16,14 @@ namespace Stupify
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment environment { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        {
+            this.Configuration = configuration;
+            this.environment = environment;
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -33,11 +35,15 @@ namespace Stupify
             services.AddControllersWithViews();
 
             string connectionString = "Host=localhost;Port=5432;Database=music;Username=postgres;Password=postgres";
+            if (environment.IsEnvironment("Testing"))
+            {
+                connectionString = "Host=localhost;Port=5432;Database=music1;Username=postgres;Password=postgres";
+            }
             services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
             services.AddTransient<IRepository<Artist>, ArtistService>();
-            services.AddTransient<SongService>();
-            services.AddTransient<UserService>();
-            services.AddTransient<UserLikeService>();
+            services.AddTransient<IRepository<Song>, SongService>();
+            services.AddTransient<IRepository<User>, UserService>();
+            services.AddTransient<IRepository<UserLike>, UserLikeService>();
 
             services.AddSwaggerGen(c =>
             {

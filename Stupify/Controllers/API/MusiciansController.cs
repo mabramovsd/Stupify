@@ -47,6 +47,11 @@ namespace Stupify.Controllers
         public ActionResult<ArtistToRead> Get(int id)
         {
             var musicianFromDB = musicianService.Get(id);
+            if (musicianFromDB == null)
+            {
+                return new ArtistToRead { Id = 0 };
+            }
+
             ArtistToRead musician = new ArtistToRead
             {
                 Id = musicianFromDB.Id,
@@ -70,6 +75,8 @@ namespace Stupify.Controllers
                 Name = musician.Name
             };
             musicianService.Create(musicianFromDB);
+            musician.Id = musicianFromDB.Id;
+
             return Ok(musician);
         }
 
